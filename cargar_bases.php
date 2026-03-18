@@ -578,23 +578,30 @@ Ver historial
 
 /* PROGRESO REAL */
 
-document.getElementById("formCarga").addEventListener("submit", function(){
+document.getElementById("formCarga").addEventListener("submit",function(){
 
-    mostrarProgreso();
+let modal=document.getElementById("modalProgreso");
 
-    setTimeout(() => {
+modal.style.display="flex";
 
-        let barra = document.getElementById("barraProgreso");
-        let texto = document.getElementById("porcentajeProgreso");
+let barra=document.getElementById("barraProgreso");
+let texto=document.getElementById("porcentajeProgreso");
 
-        progreso = 100;
+let progreso=0;
 
-        barra.style.width = "100%";
-        barra.style.background = "#28a745"; // verde
+let intervalo=setInterval(function(){
 
-        texto.innerText = "100%";
+progreso+=Math.random()*8;
 
-    }, 5000); // ajusta a tu tiempo real
+if(progreso>=90){
+progreso=99;
+clearInterval(intervalo);
+}
+
+barra.style.width=progreso+"%";
+texto.innerText=Math.round(progreso)+"%";
+
+},800);
 
 });
 

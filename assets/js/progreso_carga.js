@@ -1,6 +1,4 @@
-let progreso = 0;
-let intervalo;
-let intervaloMensajes;
+/* PROGRESO REAL SEGURO */
 
 function mostrarProgreso(){
 
@@ -10,40 +8,28 @@ function mostrarProgreso(){
     let barra = document.getElementById("barraProgreso");
     let texto = document.getElementById("porcentajeProgreso");
 
-    let mensajes = [
-        "Preparando archivo...",
-        "Procesando datos...",
-        "Insertando registros...",
-        "Validando información...",
-        "Finalizando..."
-    ];
+    let intervalo = setInterval(function(){
 
-    let i = 0;
+        fetch("includes/progreso_carga.php")
+        .then(res => res.json())
+        .then(data => {
 
-    clearInterval(intervalo);
-    clearInterval(intervaloMensajes);
-
-    progreso = 0;
-
-    /* 🔥 PROGRESO FAKE */
-    intervalo = setInterval(() => {
-
-        if(progreso < 99){
-            progreso += Math.random() * 7;
-            progreso = Math.min(progreso, 99);
+            let progreso = data.progreso || 0;
 
             barra.style.width = progreso + "%";
-            texto.innerText = Math.round(progreso) + "%";
-        }
+            texto.innerText = progreso + "%";
 
-    }, 800);
+            if(progreso >= 100){
+                clearInterval(intervalo);
+            }
 
-    /* 🔥 MENSAJES */
-    intervaloMensajes = setInterval(() => {
+        });
 
-        document.querySelector("#modalProgreso p").innerText = mensajes[i];
-        i = (i + 1) % mensajes.length;
-
-    }, 1800);
+    },1000);
 
 }
+
+/* ACTIVAR SOLO VISUAL */
+document.getElementById("formCarga").addEventListener("submit", function(){
+    mostrarProgreso();
+});
