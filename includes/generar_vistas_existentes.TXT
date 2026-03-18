@@ -1,0 +1,31 @@
+<?php
+
+include "includes/conexion.php";
+include "includes/generar_vista_horizontal.php";
+
+/* obtener combinaciones existentes */
+
+$sql="
+
+SELECT DISTINCT ciclo, formato
+FROM datos_crudos
+ORDER BY ciclo, formato
+
+";
+
+$res=$conexion->query($sql);
+
+while($row=$res->fetch_assoc()){
+
+$ciclo=$row['ciclo'];
+$formato=$row['formato'];
+
+echo "Generando vista para $formato - $ciclo <br>";
+
+generarVistaHorizontal($conexion,"datos_crudos",$formato,$ciclo);
+
+}
+
+echo "<br>Proceso terminado.";
+
+?>
