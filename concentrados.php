@@ -281,7 +281,7 @@ Concentrado estadístico
 
 <div class="reporte">
 
-<a href="#">Consulta concentrada</a>
+<a href="concentrado_general.php">Concentrado general</a>
 
 <p>Consulta estadística consolidada de los formatos</p>
 

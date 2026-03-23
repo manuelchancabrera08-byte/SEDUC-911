@@ -29,6 +29,9 @@ $formato=$_POST['formato'] ?? "";
 $entidad = $_POST['entidad'] ?? "";
 
 eliminarCarga($conexion,$ciclo,$formato,$entidad);
+/* 🔥 NUEVO: eliminar concentrado también */
+require_once "eliminar_carga.php";
+eliminarConcentradoPorCarga($conexion,$ciclo,$formato,$entidad);
 
 $mensaje="ELIMINADO";
 
@@ -172,6 +175,14 @@ procesarTXT($conexion,$tabla,$rutaArchivo,$ciclo,$formato,$carga_id);
 finalizarCarga($conexion,$carga_id,0,0,0);
 
 generarVistaHorizontal($conexion,$tabla,$formato,$ciclo);
+
+/* 🔥 NUEVO: GENERAR CONCENTRADO AUTOMÁTICO */
+
+// incluir archivo
+require_once "generar_concentrado.php";
+
+// ejecutar función
+generarConcentradoPorCarga($conexion,$carga_id);
 
 $mensaje="OK";
 
